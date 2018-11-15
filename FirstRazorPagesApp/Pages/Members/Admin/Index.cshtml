@@ -1,0 +1,20 @@
+﻿@page "{id:int?}"
+@model MembersAdminIndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Members Admin";
+}
+<h2>@ViewData["Title"]</h2>
+
+
+<form method="post" asp-antiforgery="true">
+    <input asp-for="_Member.ID" type="hidden" />
+    <table>
+        <tr><td><label asp-for="_Member.FirstName"></label><br /><input asp-for="_Member.FirstName" /><br /><span asp-validation-for="_Member.FirstName" style="color:red"></span></td></tr>
+        <tr><td><label asp-for="_Member.LastName"></label><br /><input asp-for="_Member.LastName" /><br /><span asp-validation-for="_Member.LastName" style="color:red"></span></td></tr>
+        <tr><td><label asp-for="_Member.Title"></label><br /><input asp-for="_Member.Title" /><br /><span asp-validation-for="_Member.Title" style="color:red"></span></td></tr>
+        <tr><td><label asp-for="_Member.Email"></label><br /><input asp-for="_Member.Email" /><br /><span asp-validation-for="_Member.Email" style="color:red"></span></td></tr>
+    </table>
+    <br/>
+    <input type="submit" name="FormAction" value="Submit" />
+</form>

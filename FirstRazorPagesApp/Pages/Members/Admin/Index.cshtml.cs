@@ -3,35 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FirstRazorPagesApp.Services;
+using FirstRazorPagesApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FirstRazorPagesApp.Pages
 {
-    public class ContactModel : PageModel
+    public class MembersAdminIndexModel : PageModel
     {
-        public string Message { get; set; }
 
-        private IPersonService _person;
+        private readonly IMemberService _member;
 
-        public ContactModel(IPersonService person)
+        public MembersAdminIndexModel(IMemberService member)
         {
-            _person = person;
+            _member = member;
         }
 
         [BindProperty]
-        public Person _Person { get; set; }
+        public Member _Member { get; set; }
 
         public void OnGet(int? id)
         {
-            Message = "Your contact page.";
             if(id.HasValue)
             {
-                _Person = _person.LoadByID(id.Value);
+                _Member = _member.LoadByID(id.Value);
             }
             else
             {
-                _Person = new Person();
+                _Member = new Member();
             }
         }
 
@@ -43,7 +42,8 @@ namespace FirstRazorPagesApp.Pages
             }
             else
             {
-                return RedirectToPage("Index");
+                _member.Save(_Member);
+                return RedirectToPage("/Members/Index");
             }
         }
     }
