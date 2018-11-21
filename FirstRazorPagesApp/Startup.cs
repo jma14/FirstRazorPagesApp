@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FirstRazorPagesApp.Data;
 using FirstRazorPagesApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,9 +33,10 @@ namespace FirstRazorPagesApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IMemberService, MemberService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<ICMSService, CMSService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +53,15 @@ namespace FirstRazorPagesApp
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.Use((context, next) =>
+            {
+                context.Items.Add("PageID", 1);
+
+                // Call the next delegate/middleware in the pipeline
+                return next();
+            });
+
 
             app.UseMvc();
         }
