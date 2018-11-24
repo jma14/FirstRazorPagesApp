@@ -36,7 +36,7 @@ namespace FirstRazorPagesApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IMemberService, MemberService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<ICMSService, CMSService>();
+            services.AddSingleton(serviceCollection => new CMS(serviceCollection.GetService<IHttpContextAccessor>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,12 +56,11 @@ namespace FirstRazorPagesApp
 
             app.Use((context, next) =>
             {
-                context.Items.Add("PageID", 1);
+                context.Items.Add("PageID", 5);
 
                 // Call the next delegate/middleware in the pipeline
                 return next();
             });
-
 
             app.UseMvc();
         }

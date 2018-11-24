@@ -12,18 +12,15 @@ namespace FirstRazorPagesApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ICMSService _cmsservice;
-        private readonly IHttpContextAccessor _context;
         public CMS cms;
-        public IndexModel(IHttpContextAccessor context, ICMSService cmsservice)
+        public IndexModel(CMS _cms)
         {
-            _context = context;
-            _cmsservice = cmsservice;
+            cms = _cms;
         }
 
         public void OnGet()
         {
-            cms = _cmsservice.Get(_context);
+            
         }
     }
 }

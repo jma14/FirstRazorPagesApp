@@ -11,9 +11,11 @@ namespace FirstRazorPagesApp.Data
     public class CMS
     {
         public int PageID { get; }
+        private readonly IHttpContextAccessor context;
 
-        public CMS(IHttpContextAccessor context)
+        public CMS(IHttpContextAccessor _context)
         {
+            context = _context;
             PageID = (int)context.HttpContext.Items["PageID"];
         }
     }
